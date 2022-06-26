@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-from scraper.product.enums import BaseModelStatus
+from product.enums import BaseModelStatus
 
 
 class BaseModel(models.Model):
@@ -51,7 +51,7 @@ class Product(BaseModel):
         return self.name
 
 
-class ProductPrice(BaseModel):
+class Price(BaseModel):
     selling = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -60,7 +60,7 @@ class ProductPrice(BaseModel):
         verbose_name_plural = 'Product Prices'
 
     def __str__(self):
-        return f'{self.product.name} - {self.price}'
+        return f'Selling: {self.selling} - Discount: {self.discount}'
 
 
 
@@ -74,4 +74,16 @@ class Merchant(BaseModel):
         verbose_name_plural = 'Merchants'
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.city_name} - {self.seller_score}"
+
+
+class Scraper(BaseModel):
+    url = models.URLField()
+    response = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Scraper'
+        verbose_name_plural = 'Scrapers'
+
+    def __str__(self):
+        return self.url
