@@ -5,7 +5,7 @@ from .parser import Parser
 
 class CustomProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'brand', 'price', 'category', 'merchant', 'get_other_merchants')
-    list_filter = ('brand', 'category', 'merchant')
+    list_filter = ('brand', 'category',)
     search_fields = ('name', 'brand', 'category', 'merchant')
 
     def get_other_merchants(self, obj):
