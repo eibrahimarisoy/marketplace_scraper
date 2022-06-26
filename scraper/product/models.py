@@ -33,7 +33,7 @@ class Product(BaseModel):
         related_name='product',
     )
     category = models.CharField(max_length=255)
-    merchant = models.OneToOneField(
+    merchant = models.ForeignKey(
         'product.Merchant',
         on_delete=models.CASCADE,
     )
@@ -53,21 +53,21 @@ class Product(BaseModel):
 
 class Price(BaseModel):
     selling = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=10, decimal_places=2)
+    discounted = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=3)
 
     class Meta:
         verbose_name = 'Product Price'
         verbose_name_plural = 'Product Prices'
 
     def __str__(self):
-        return f'Selling: {self.selling} - Discount: {self.discount}'
-
+        return f'Selling: {self.selling} - Discount: {self.discounted}'
 
 
 class Merchant(BaseModel):
     name = models.CharField(max_length=255)
     city_name = models.CharField(max_length=255)
-    seller_score = models.DecimalField(max_digits=10, decimal_places=2)
+    seller_score = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = 'Merchant'
